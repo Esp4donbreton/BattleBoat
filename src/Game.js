@@ -50,18 +50,6 @@ Game.onload = function() {
 
 
 
-  // don't do this because DisplayObject bounds is not set to the render size but to the objects inside the scene
-  // scene.interactive = true;
-  // scene.click = function()
-  // {
-  //   console.log( "clicked", arguments );
-  // }
-
-  // if no Camera, we add the Scene to the render (this can change if I make Camera)
-
-
-
-
   //------------------------------Generation de la camera (pour voir la scene)------------------------------
   Game.camera = new DE.Camera(0, 0, 1920, 1080, {
     scene: Game.scene,
@@ -95,20 +83,6 @@ Game.onload = function() {
   Game.boat_1;
   Game.boat_2;
 
-  // WIP working on a simple "AnimatedSprite" declaration
-  // var imgs = ["ship1.png","ship2.png","ship3.png","ship4.png","ship5.png","ship6.png"];
-  // var textureArray = [];
-
-  // for (var i=0; i < imgs.length; i++)
-  // {
-  //   var texture = PIXI.utils.TextureCache[imgs[i]];
-  //   textureArray.push(texture);
-  // };
-
-  // var mc = new PIXI.extras.AnimatedSprite(textureArray);
-
-
-
   //---------------Generation du bateau du joueur 1--------------------------
   Game.boat_1 = new DE.GameObject({
     x: 1600,
@@ -118,18 +92,16 @@ Game.onload = function() {
       new DE.SpriteRenderer({ spriteName: 'boat_1' }),
     ],
 
-
-   //----------------------------------------------------------------------------
-
-   axes: { x: 0, y: 0 },
-   interactive: true,
-   checkInputs: function() {
-     this.translate({ x: this.axes.x * 2, y: this.axes.y * 2 });
-   },
-   automatisms: [['checkInputs', 'checkInputs']],
+    axes: { x: 0, y: 0 },
+    interactive: true,
+    checkInputs: function() {
+      this.translate({ x: this.axes.x * 2, y: this.axes.y * 2 });
+    },
+    automatisms: [['checkInputs', 'checkInputs']],
   });
-
-  //Game.boat_1 = new DE.FixedBoxCollider(150,100)
+  //----------------------------------------------------------------------------
+  
+  //Game.boat_1 = new DE.FixedBoxCollider(150,100);
 
 
     //---------------Generation du bateau du joueur 2--------------------------
@@ -140,16 +112,16 @@ Game.onload = function() {
       renderers: [
         new DE.SpriteRenderer({ spriteName: 'boat_2' }),
       ],
-     //----------------------------------------------------------------------------
-  
-     axes: { x: 0, y: 0 },
-     interactive: true,
-     checkInputs: function() {
-       this.translate({ x: this.axes.x * 2, y: this.axes.y * 2 });
+      
+      axes: { x: 0, y: 0 },
+      interactive: true,
+      checkInputs: function() {
+        this.translate({ x: this.axes.x * 2, y: this.axes.y * 2 });
      },
      automatisms: [['checkInputs', 'checkInputs']],
     });
-
+    //----------------------------------------------------------------------------
+    
 
 
 
@@ -237,12 +209,15 @@ Game.onload = function() {
   }
   //-------------------------------------------------------------------------------------------
 
+/*
 
+Game.bullet.explode = function(){
+  askToKill();
+}
 
+Game.bullet.addAutomatism('explode', 'explode', {interval: 1})
 
-
-
-
+*/
 
 
 
@@ -257,6 +232,12 @@ Game.onload = function() {
     x: 1700,
     y: 100,
     zindex: 10,
+    renderer: new DE.TextureRenderer({ spriteName: 'heart' }),
+  });
+  Game.heart3 = new DE.GameObject({
+    x: 1800,
+    y: 100,
+    zindex: 10,
     renderer: new DE.TextureRenderer({
       spriteName: 'heart',
       width: 50,
@@ -264,23 +245,40 @@ Game.onload = function() {
     }),
   });
 
-//Game shapes supprimées
 
-//Scoller supprimé
-
-//Bouton Camera follow supprimé
-
-//Bouton Object Focus supprimé
+  Game.heart12 = new DE.GameObject({
+    x: 100,
+    y: 100,
+    zindex: 10,
+    renderer: new DE.TextureRenderer({ spriteName: 'heart' }),
+  });
+  Game.heart22 = new DE.GameObject({
+    x: 200,
+    y: 100,
+    zindex: 10,
+    renderer: new DE.TextureRenderer({ spriteName: 'heart' }),
+  });
+  Game.heart32 = new DE.GameObject({
+    x: 300,
+    y: 100,
+    zindex: 10,
+    renderer: new DE.TextureRenderer({ spriteName: 'heart' }),
+  });
+  
 
   Game.scene.add(
     Game.boat_1,
     Game.boat_2,
     Game.heart1,
     Game.heart2,
+    Game.heart3,
+    Game.heart12,
+    Game.heart22,
+    Game.heart32,
   );
 
   Game.boat_1.rotation = -90;
-  Game.boat_2.rotation = 90;
+  Game.boat_2.rotation = 45;
 
 
 
